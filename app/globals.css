@@ -217,13 +217,13 @@ section {
 }
 
 
+.about-wrapper, 
 .skills-wrapper {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 0 60px;
-  box-sizing: border-box;
-}
+  min-height: 100vh; /* Changed from height to min-height */
+  height: auto;      /* Ensures it can expand */
+  padding-top: 80px; /* Gives room for the fixed navbar */
+  padding-bottom: 40px;
+} 
 
 /* centered label */
 .skills-header {
@@ -382,19 +382,32 @@ section {
     width: 100%;
   }
 
-  .skills-icons,
-  .skills-tags,
   .skills-text {
     width: 100%;
     max-width: 340px;
   }
+
+  
 
   .skills-label {
     font-size: 40px;
   }
 }
 
+@media (max-width: 768px) {
+  .skills-icons,
+  .skills-tags {
+    width: 100%;       /* Let it take the full container width */
+    max-width: 100%;    /* Remove the 340px/380px restriction */
+    padding: 0 10px;    /* Prevent tags from touching screen edges */
+    gap: 10px;          /* Tighten gap slightly for small screens */
+  }
 
+  .tag-box {
+    white-space: normal; /* Allows long tags to wrap if necessary */
+    text-align: center;
+  }
+}
 
 
 .projects-wrapper {
@@ -575,20 +588,85 @@ section {
 }
 
 @media (max-width: 768px) {
-  .projects-container,
-  .skills-container,
-  .about-container {
-    flex-direction: column;
-    align-items: center;
+  .projects-wrapper {
+    padding: 100px 20px; /* More top padding for the fixed nav */
   }
 
-  .skills-label,
+  .projects-container {
+    gap: 40px; /* Reduce gap between project cards */
+  }
+
+  .project-card {
+    max-width: 100%; /* Use full available width */
+  }
+  
   .projects-title {
-    font-size: 32px;
+    font-size: 36px; /* Shrink title so it doesn't wrap awkwardly */
+    text-align: center;
   }
+}
 
-  .tag-box {
-    font-size: 14px;
+@media (max-width: 600px) {
+  .navbar ul {
+    gap: 15px; /* Shrink spacing between nav items */
+  }
+  
+  .navbar a {
+    font-size: 16px; /* Smaller text */
+  }
+  
+  .navbar {
+    padding: 0 15px;
   }
 } 
 
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.menu-toggle span {
+  width: 30px;
+  height: 3px;
+  background-color: #030303;
+  transition: 0.3s;
+}
+
+/* --- Mobile: Burger Logic --- */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex; /* Show burger on mobile */
+  }
+
+  .navbar ul {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen to the right */
+    width: 70%;
+    height: 100vh;
+    background: #cea8fdd9;
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    transition: 0.4s ease-in-out;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+  }
+
+  /* When JS adds the .active class, slide the menu in */
+  .navbar ul.active {
+    right: 0;
+  }
+
+  /* X Animation for Burger when active */
+  .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .menu-toggle.active span:nth-child(2) { opacity: 0; }
+  .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+} 

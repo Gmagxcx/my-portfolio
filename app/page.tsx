@@ -6,6 +6,13 @@ import { useEffect, useState } from "react"
 
 export default function Home() {
   const [active, setActive] = useState("about")
+// 1. Add state for the burger menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Toggle function
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  // Close function for when a link is clicked
+  const closeMenu = () => setIsMenuOpen(false)
 
   useEffect(() => {
     const sections = ["about", "skills", "projects", "contact"]
@@ -32,34 +39,61 @@ export default function Home() {
   return (
     <>
       <nav className="navbar">
-        <a href="#about" className="logo">
+        <a href="#about" className="logo" onClick={closeMenu}>
           My Portfolio
         </a>
 
-        <ul>
+        {/* The Burger Button - now toggles state and adds 'active' class for CSS animation */}
+        <button 
+          className={`menu-toggle ${isMenuOpen ? "active" : ""}`} 
+          onClick={toggleMenu}
+          aria-label="Toggle Menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {/* The Menu - uses isMenuOpen to slide in/out on mobile */}
+        <ul id="nav-menu" className={isMenuOpen ? "active" : ""}>
           <li>
-            <a href="#about" className={active === "about" ? "active" : ""}>
+            <a 
+              href="#about" 
+              className={active === "about" ? "active" : ""} 
+              onClick={closeMenu}
+            >
               About Me
             </a>
           </li>
           <li>
-            <a href="#skills" className={active === "skills" ? "active" : ""}>
+            <a 
+              href="#skills" 
+              className={active === "skills" ? "active" : ""} 
+              onClick={closeMenu}
+            >
               Skills
             </a>
           </li>
           <li>
-            <a href="#projects" className={active === "projects" ? "active" : ""}>
+            <a 
+              href="#projects" 
+              className={active === "projects" ? "active" : ""} 
+              onClick={closeMenu}
+            >
               Projects
             </a>
           </li>
           <li>
-            <a href="#contact" className={active === "contact" ? "active" : ""}>
+            <a 
+              href="#contact" 
+              className={active === "contact" ? "active" : ""} 
+              onClick={closeMenu}
+            >
               Contact
             </a>
           </li>
         </ul>
       </nav>
-
       <section id="about" className="snap-section">
         <div className="about-wrapper">
 
