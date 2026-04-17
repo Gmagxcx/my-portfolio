@@ -98,7 +98,7 @@ export default function Home() {
           </div>
 
           {/* CONTENT */}
-          <div className="skills-container">
+          <div className="skills-container"> 
 
             {/* LEFT SIDE */}
             <div className="skills-half">  
